@@ -4,4 +4,4 @@ var randomName = faker.name.findName(); // Rowan Nikolaus
 var randomEmail = faker.internet.email(); // Kassandra.Haley@erich.biz
 var price = faker.commerce.price(); // random contact card containing many properties
 
-console.log(price)
+console.log(randomName)
