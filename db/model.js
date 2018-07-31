@@ -8,15 +8,17 @@ connection.connect(function(err) {
     console.error('error connecting: ' + err.stack);
     return;
   }
-
-
-console.log('connected as id ' + connection.threadId + ' @ '+ Date());
+	console.log('connected as id ' + connection.threadId + ' @ '+ Date());
 });
 
-var getOneStock = (stockname) => {
-	connection.query('SELECT * from stockprice where stock_name = ?',[stockname], function (error, results, fields) {
-	  if (error) throw error;
-	  console.log('The solution is: ', results);
+
+var getOneStock = (stockid, callback) => {
+	connection.query('SELECT * from stockprice where id = ?',[stockid], function (error, results, fields) {
+		if(error){
+			callback(error)
+		}else{
+			callback(null, results);
+		}
 	});
 }
 
@@ -34,7 +36,7 @@ var insertInitialData = () => {
 	}
 }
 
-module.exports = getOneStock;
+module.exports = {getOneStock};
 
 // insertInitialData()
-// getOneStock('Stokes - Nienow');
+// getOneStock(1, console.log);
