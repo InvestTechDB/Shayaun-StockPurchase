@@ -3,16 +3,7 @@ var faker = require('faker');
 
 
 
-connection.connect(function(err) {
-  if (err) {
-    console.error('error connecting: ' + err.stack);
-    return;
-  }
-	console.log('connected as id ' + connection.threadId + ' @ '+ Date());
-});
-
-
-var getOneStock = (stockid, callback) => {
+const getOneStock = (stockid, callback) => {
 	connection.query('SELECT * from stockprice where id = ?',[stockid], function (error, results, fields) {
 		if(error){
 			callback(error)
@@ -22,7 +13,25 @@ var getOneStock = (stockid, callback) => {
 	});
 }
 
-var insertInitialData = () => {
+const deleteStock = (stockid, callback) => {
+	connection.query(`DELETE FROM stockprice IF id = ${stockid};`, (err, res) => {
+		if (error) {
+			callback(error);
+		} else {
+			callback(null, results);
+		}
+	});
+}
+
+const updateStock = (val, stockid, callback) => {
+	connection.query(`UPDATE stockprice SET current_price = ${val} WHERE id = ${stockid};`)
+}
+
+const addStock = (val) => {
+	connection.query(`INSERT INTO stockprice (stock_name) VALUES (${val});`)
+}
+
+const insertInitialData = () => {
 	for (var i = 100; i > 0; i--) {
 		var spread = Math.random()*0.15/2;//the biggest bid and ask spread on according the efts on vanguard 
 		var prev_price = Number(faker.finance.amount());
@@ -36,7 +45,7 @@ var insertInitialData = () => {
 	}
 }
 
-module.exports = {getOneStock};
+module.exports = {getOneStock, deleteStock, updateStock, addStock};
 
 // insertInitialData()
 // getOneStock(1, console.log);

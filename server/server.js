@@ -25,16 +25,35 @@ app.get('/:stockNameID', (req, res) => {
   });
 });
 
-app.post('/:stockNameID', (req, res) => {
-	res.sendStatus(404);
+app.update('/:stockNameID', (req, res) => {
+	db.updateStock(req.params.stockName, (err, data) => {
+		if (err) {
+			res.sendStatus(400);
+		} else {
+			res.status(200).json(data);
+		}
+	})
 })
 
-app.update('/:stockNameID', (req, res) => {
-	res.sendStatus(404);
+app.post('/:stockNameID', (req, res) => {
+	db.addStock(req.params.stockName, (err, data) => {
+		if (err) {
+			res.sendStatus(400);
+		} else {
+			res.status(200).json(data);
+		}
+	});
 })
+
 
 app.delete('/:stockNameID', (req, res) => {
-	res.sendStatus(404);
+	db.deleteStock(req.params.stockName, (err, data) => {
+		if (err) {
+			res.sendStatus(400);
+		} else {
+			res.status(200).json(data);
+		}
+	})
 })
 
-app.listen(3000, () => console.log('xlistening on port 3000!'))
+app.listen(3000, () => console.log('listening on port 3000!'))

@@ -17,7 +17,15 @@
 
 ## Usage
 
-> Some usage instructions
+> CRUD Instructions: 
+
+Sending a 'get' request will render the stock price for that data in particular. It will grab the data related to that request and present the 'JSON'-ified version on the client-side.
+
+Updating a stock, will update the stock at a particular id with a new price.
+
+Deleting a stock will delete the stock at a particular id.
+
+Posting a stock will generate a new stock at a particular id.
 
 ## Requirements
 
